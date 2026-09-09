@@ -11,6 +11,16 @@ A `dsh` (DeepSeek Harness) plugin that routes models through **CPA**
   picker — click it for a slider that live-controls the context cap driving
   auto-compact, no `dsh` restart needed to move it.
 
+## Compatibility
+
+Works with `dsh` **0.1.5-alpha.2** (verified) and 0.1.1-rc.x. The
+0.1.5-alpha migration touched only the host face: settings registration now
+goes through `ctx.inject(["settings"])` + `settings.installSection`,
+`deepEqualJson` moved to `@deepseek-ai/dsh-util-values`, the tool-call brand
+is `ToolCallId`, and inline images read through
+`attachments.readImageRequest(ref, policy)` with a route-owned budget (20 MB
+bytes / 8 M pixels). The deploy/activate flow below is unchanged.
+
 ## Install
 
 1. **Deploy the plugin package** into your `web` profile:
