@@ -1,4 +1,4 @@
-# dsh-cpa-plugin
+# @xiangsam/dsh-cpa-plugin
 
 A `dsh` (DeepSeek Harness) plugin that routes models through **CPA**
 (MacCLIProxyAPI), your local unified subscription-model endpoint. It adds:
@@ -23,6 +23,22 @@ bytes / 8 M pixels). The deploy/activate flow below is unchanged.
 
 ## Install
 
+The package is published to GitHub Packages as `@xiangsam/dsh-cpa-plugin`.
+Installing from the registry needs authentication, so log in once first
+(password: a PAT with `read:packages`) and map the scope:
+
+```sh
+npm login --registry=https://npm.pkg.github.com
+npm config set @xiangsam:registry https://npm.pkg.github.com
+```
+
+Then either let dsh install it into the profile, or use the copy deploy
+below when you are editing this checkout:
+
+```sh
+dsh plugin --profile web add "@xiangsam/dsh-cpa-plugin@0.1.0"
+```
+
 1. **Deploy the plugin package** into your `web` profile:
 
    ```sh
@@ -30,7 +46,7 @@ bytes / 8 M pixels). The deploy/activate flow below is unchanged.
    ```
 
    This copies the plugin's files into
-   `~/.dsh/profiles/web/node_modules/dsh-cpa-plugin/`. Don't use
+   `~/.dsh/profiles/web/node_modules/@xiangsam/dsh-cpa-plugin/`. Don't use
    `dsh plugin --profile web add <path>` for this package — see
    [DEVELOPMENT.md](DEVELOPMENT.md#why-deploysh-copies-instead-of-symlinking)
    for why. Re-run `./deploy.sh web` after every edit — it's a copy, not a
@@ -44,7 +60,7 @@ bytes / 8 M pixels). The deploy/activate flow below is unchanged.
    ```yaml
    - insert:
        - id: llm-cpa
-         name: dsh-cpa-plugin
+         name: '@xiangsam/dsh-cpa-plugin'
          config:
            baseURL: http://127.0.0.1:8317/v1
            apiKeyEnv: CPA_API_KEY

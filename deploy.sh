@@ -5,13 +5,16 @@
 set -e
 
 PROFILE="${1:-web}"
-DEST="$HOME/.dsh/profiles/$PROFILE/node_modules/dsh-cpa-plugin"
+DEST="$HOME/.dsh/profiles/$PROFILE/node_modules/@xiangsam/dsh-cpa-plugin"
+LEGACY_DEST="$HOME/.dsh/profiles/$PROFILE/node_modules/dsh-cpa-plugin"
 SRC="$(cd "$(dirname "$0")" && pwd)"
 
+# Drop a pre-scope copy so an upgrade never leaves two resolvable rows.
+rm -rf "$LEGACY_DEST"
 mkdir -p "$DEST/lib"
 cp "$SRC/package.json" "$DEST/package.json"
 cp "$SRC/lib/index.js" "$DEST/lib/index.js"
 cp "$SRC/lib/client.js" "$DEST/lib/client.js"
 
-echo "deployed dsh-cpa-plugin -> $DEST"
+echo "deployed @xiangsam/dsh-cpa-plugin -> $DEST"
 echo "restart 'dsh $PROFILE' (or dsh --profile $PROFILE ...) for changes to take effect — hmr is off by default for this profile."

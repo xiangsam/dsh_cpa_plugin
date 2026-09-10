@@ -1,6 +1,6 @@
 # Development notes
 
-Implementation rationale for `dsh-cpa-plugin`. See [README.md](README.md) for
+Implementation rationale for `@xiangsam/dsh-cpa-plugin`. See [README.md](README.md) for
 install/usage; this file is for anyone editing the plugin itself.
 
 ## Package layout
@@ -201,7 +201,7 @@ context-window handling) without breaking the happy path — the kind of bug
 that only shows up later.
 
 `deploy.sh` instead copies this package's real files straight into
-`~/.dsh/profiles/<profile>/node_modules/dsh-cpa-plugin/`, a location the
+`~/.dsh/profiles/<profile>/node_modules/@xiangsam/dsh-cpa-plugin/`, a location the
 ancestor-walk resolves correctly, verified end to end against a real CPA
 round trip while building this.
 

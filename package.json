@@ -1,8 +1,11 @@
 {
-  "name": "dsh-cpa-plugin",
+  "name": "@xiangsam/dsh-cpa-plugin",
   "description": "dsh LLM adapter for MacCLIProxyAPI (CPA) — routes DeepSeek/subscription models through the local CPA unified endpoint, with 7-level thinking effort and a live context-cap setting the composer slider controls",
   "version": "0.1.0",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiangsam/dsh_cpa_plugin.git"
+  },
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -27,13 +30,17 @@
     "@deepseek-ai/schemastery": "^3.18.1"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-credentials": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-invariants": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-llm": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-settings": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-timeout": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-launch-environment": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-anonymous-user-id": "^0.1.0-rc.7",
+    "@deepseek-ai/dsh-credentials": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
+    "@deepseek-ai/dsh-invariants": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
+    "@deepseek-ai/dsh-settings": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
+    "@deepseek-ai/dsh-timeout": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
+    "@deepseek-ai/dsh-launch-environment": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
+    "@deepseek-ai/dsh-anonymous-user-id": "^0.1.0-rc.7 || >=0.1.5-alpha.2 <0.1.6",
     "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
   }
 }
