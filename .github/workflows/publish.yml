@@ -40,20 +40,30 @@ jobs:
             exit 1
           fi
 
+      - name: Resolve the publish mode
+        id: mode
+        env:
+          # github.event.inputs carries the raw dispatch string; the inputs
+          # context can render empty here, which would silently publish.
+          DRY_RUN_INPUT: ${{ github.event.inputs.dry_run }}
+        run: |
+          echo "event=${{ github.event_name }} dry_run=[${DRY_RUN_INPUT}]"
+          case "${DRY_RUN_INPUT:-false}" in
+            true|True|TRUE|1) echo "dry_run=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "dry_run=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+          version="$(node -p "require('./package.json').version")"
+          case "$version" in
+            *-*) prerelease="${version#*-}"; echo "tag_args=--tag ${prerelease%%.*}" >> "$GITHUB_OUTPUT" ;;
+            *) echo "tag_args=" >> "$GITHUB_OUTPUT" ;;
+          esac
+
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          version="$(node -p "require('./package.json').version")"
-          tag_args=""
-          case "$version" in
-            *-*)
-              prerelease="${version#*-}"
-              tag_args="--tag ${prerelease%%.*}"
-              ;;
-          esac
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            npm publish --dry-run $tag_args
+          if [ "${{ steps.mode.outputs.dry_run }}" = "true" ]; then
+            npm publish --dry-run ${{ steps.mode.outputs.tag_args }}
           else
-            npm publish $tag_args
+            npm publish ${{ steps.mode.outputs.tag_args }}
           fi
