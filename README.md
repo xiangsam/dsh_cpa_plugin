@@ -13,13 +13,39 @@ A `dsh` (DeepSeek Harness) plugin that routes models through **CPA**
 
 ## Compatibility
 
-Works with `dsh` **0.1.5-alpha.2** (verified) and 0.1.1-rc.x. The
-0.1.5-alpha migration touched only the host face: settings registration now
-goes through `ctx.inject(["settings"])` + `settings.installSection`,
-`deepEqualJson` moved to `@deepseek-ai/dsh-util-values`, the tool-call brand
-is `ToolCallId`, and inline images read through
+| dsh release | Status |
+| --- | --- |
+| `0.1.5-alpha.2` | **Verified** — registered provider, live model directory, boot + settings section |
+| other `>=0.1.5-alpha.2 <0.2.0-0` | Supported window, untested |
+| `0.1.1-rc.x` and older | **Not supported** — they have no `settings.installSection` |
+
+The adapter needs the settings API introduced in the 0.1.5-alpha line. On an
+older dsh the plugin now **stays loaded**: it logs an error naming the required
+range, registers the CPA provider with the plugin config only, and leaves the
+Models-page section and the Ctx slider unavailable (instead of failing the
+whole plugin tree). It also reads the running dsh version at boot and warns
+when it is outside the window. The same declaration ships in the package
+manifest under `dsh.compatibility`.
+
+The 0.1.5-alpha migration touched only the host face: settings registration
+now goes through `ctx.inject(["settings"])` + `settings.installSection`,
+`deepEqualJson` moved to `@deepseek-ai/dsh-util-values`, the tool-call brand is
+`ToolCallId`, and inline images read through
 `attachments.readImageRequest(ref, policy)` with a route-owned budget (20 MB
 bytes / 8 M pixels). The deploy/activate flow below is unchanged.
+
+## Release
+
+Bump `version` in `package.json`, commit, then tag and push:
+
+```sh
+git tag "v$(node -p "require('./package.json').version")"
+git push origin main --tags
+```
+
+`.github/workflows/publish.yml` verifies the tag matches `package.json` and
+publishes to GitHub Packages with the workflow's `GITHUB_TOKEN`. Dispatch it
+manually with `dry_run` enabled to validate without publishing.
 
 ## Install
 
