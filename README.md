@@ -62,7 +62,7 @@ Then either let dsh install it into the profile, or use the copy deploy
 below when you are editing this checkout:
 
 ```sh
-dsh plugin --profile web add "@xiangsam/dsh-cpa-plugin@0.1.0"
+dsh plugin --profile web add "@xiangsam/dsh-cpa-plugin@0.1.1"
 ```
 
 1. **Deploy the plugin package** into your `web` profile:

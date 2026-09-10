@@ -1,7 +1,7 @@
 {
   "name": "@xiangsam/dsh-cpa-plugin",
   "description": "dsh LLM adapter for MacCLIProxyAPI (CPA) — routes DeepSeek/subscription models through the local CPA unified endpoint, with 7-level thinking effort and a live context-cap setting the composer slider controls. Requires dsh >= 0.1.5-alpha.2 (verified on 0.1.5-alpha.2)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xiangsam/dsh_cpa_plugin.git"
