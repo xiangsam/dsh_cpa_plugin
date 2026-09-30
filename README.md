@@ -15,24 +15,26 @@ A `dsh` (DeepSeek Harness) plugin that routes models through **CPA**
 
 | dsh release | Status |
 | --- | --- |
-| `0.1.5-alpha.2` | **Verified** — registered provider, live model directory, boot + settings section |
-| other `>=0.1.5-alpha.2 <0.2.0-0` | Supported window, untested |
-| `0.1.1-rc.x` and older | **Not supported** — they have no `settings.installSection` |
+| `0.2.0-rc.2` | **Verified target** — SettingsForms + volatile Config, remote.settings client, ImageRequestTarget |
+| other `>=0.2.0-rc.2 <0.3.0-0` | Supported window, untested |
+| `0.1.x` and older | **Not supported** — `settings.installSection` was removed in 0.2; this release needs SettingsForms |
 
-The adapter needs the settings API introduced in the 0.1.5-alpha line. On an
-older dsh the plugin now **stays loaded**: it logs an error naming the required
-range, registers the CPA provider with the plugin config only, and leaves the
-Models-page section and the Ctx slider unavailable (instead of failing the
-whole plugin tree). It also reads the running dsh version at boot and warns
-when it is outside the window. The same declaration ships in the package
-manifest under `dsh.compatibility`.
+This release targets the dsh 0.2 settings face. Config fields that the Models
+page and Ctx slider edit are marked `.volatile()`. Live updates arrive through
+Cordis `loader/volatile-update` (no more `installSection` / `setSource`). The
+client writes `contextCapTokens` via `ctx.remote.settings.mutate`. Inline
+images use `readImageRequest(ref, { width, height, maxBytes })`. On an older
+dsh the plugin still **stays loaded**: it logs an error naming the required
+range and registers the CPA provider with plugin config only. The same
+declaration ships under `dsh.compatibility`.
 
-The 0.1.5-alpha migration touched only the host face: settings registration
-now goes through `ctx.inject(["settings"])` + `settings.installSection`,
-`deepEqualJson` moved to `@deepseek-ai/dsh-util-values`, the tool-call brand is
-`ToolCallId`, and inline images read through
-`attachments.readImageRequest(ref, policy)` with a route-owned budget (20 MB
-bytes / 8 M pixels). The deploy/activate flow below is unchanged.
+The 0.2.0-rc migration (host + client): drop `settings.installSection`; use
+`settings.configure({ auto: false })` + volatile Config; `settingsNs` is the
+profile entry id (`ctx.fiber.entry?.options.id`); client moves from
+`connection.api.settings` to `remote.settings`; image policy becomes an
+`ImageRequestTarget`. Deploy/activate via `deploy.sh` + `cordis.patch.yml`
+is unchanged — keep the entry `id: llm-cpa` so the Ctx slider's namespace
+matches.
 
 ## Release
 
@@ -62,7 +64,7 @@ Then either let dsh install it into the profile, or use the copy deploy
 below when you are editing this checkout:
 
 ```sh
-dsh plugin --profile web add "@xiangsam/dsh-cpa-plugin@0.1.1"
+dsh plugin --profile web add "@xiangsam/dsh-cpa-plugin@0.2.0"
 ```
 
 1. **Deploy the plugin package** into your `web` profile:

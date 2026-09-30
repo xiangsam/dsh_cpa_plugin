@@ -1,7 +1,7 @@
 {
   "name": "@xiangsam/dsh-cpa-plugin",
-  "description": "dsh LLM adapter for MacCLIProxyAPI (CPA) — routes DeepSeek/subscription models through the local CPA unified endpoint, with 7-level thinking effort and a live context-cap setting the composer slider controls. Requires dsh >= 0.1.5-alpha.2 (verified on 0.1.5-alpha.2)",
-  "version": "0.1.1",
+  "description": "dsh LLM adapter for MacCLIProxyAPI (CPA) \u2014 routes DeepSeek/subscription models through the local CPA unified endpoint, with 7-level thinking effort and a live context-cap setting the composer slider controls. Requires dsh >= 0.2.0-rc.2 (verified on 0.2.0-rc.2)",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xiangsam/dsh_cpa_plugin.git"
@@ -25,9 +25,9 @@
     },
     "compatibility": {
       "tested": [
-        "0.1.5-alpha.2"
+        "0.2.0-rc.2"
       ],
-      "range": ">=0.1.5-alpha.2 <0.2.0-0"
+      "range": ">=0.2.0-rc.2 <0.3.0-0"
     }
   },
   "keywords": [
@@ -36,7 +36,7 @@
     "deepseek-harness",
     "llm-adapter",
     "maccliproxyapi",
-    "dsh-0.1.5-alpha.2"
+    "dsh-0.2.0-rc.2"
   ],
   "license": "MIT",
   "dependencies": {
@@ -44,14 +44,14 @@
     "@deepseek-ai/schemastery": "^3.18.1"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-credentials": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/dsh-invariants": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/dsh-llm": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/dsh-settings": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/dsh-timeout": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/dsh-launch-environment": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/dsh-anonymous-user-id": ">=0.1.5-alpha.2 <0.2.0-0",
-    "@deepseek-ai/cordis": "^4.0.1"
+    "@deepseek-ai/dsh-credentials": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/dsh-llm": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/dsh-settings": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/dsh-timeout": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/dsh-launch-environment": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/dsh-anonymous-user-id": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/dsh-util-values": ">=0.2.0-rc.2 <0.3.0-0",
+    "@deepseek-ai/cordis": "^4.0.4"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
