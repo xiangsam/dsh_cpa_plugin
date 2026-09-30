@@ -3,6 +3,20 @@
 Implementation rationale for `@xiangsam/dsh-cpa-plugin`. See [README.md](README.md) for
 install/usage; this file is for anyone editing the plugin itself.
 
+## dsh 0.2.0-rc.2 notes
+
+- **Settings**: `settings.installSection` is gone. Export `Config` with
+  `.volatile()` on every Models-page / slider field. Call
+  `settings.configure({ auto: false }, ctx.fiber)` and refresh registration
+  facts on `loader/volatile-update`. Read live values with `plainOptions()` /
+  `.get()` on `Volatile` refs. Form namespace = profile entry id
+  (`ctx.fiber.entry?.options.id`, conventionally `llm-cpa`).
+- **Client**: inject `remote` + `remote.settings`; call
+  `ctx.remote.settings.describe()` / `.mutate(ns, ops, revision)` (result shape
+  `{ ok, value }`, not `connection.api.settings` / `{ result: … }`).
+- **Images**: `readImageRequest` takes `{ width, height, maxBytes }` derived
+  from the attachment's intrinsic size under the route pixel/byte budget.
+
 ## Package layout
 
 Two halves, one package:
@@ -72,7 +86,7 @@ User messages and tool results carrying an `image` content block are
 serialized to Responses `input_image` parts
 (`{type:"input_image", detail:"auto", image_url:"data:<mime>;base64,..."}`),
 resolved through the durable attachment service (`ctx.attachments`,
-`readImage(ref)` → bytes). This mirrors the wire shape CPA's own
+`readImageRequest(ref, { width, height, maxBytes })` → bytes). This mirrors the wire shape CPA's own
 Codex-ingress conversion produces for the same `FormatOpenAIResponse` target
 (`convertToolResultOutput` in `@earendil-works/pi-ai`'s
 `openai-responses-shared.js`, and `dsh-llm-pi-ai`'s own `userContent()`
@@ -176,7 +190,7 @@ from the same live settings call the panel already makes. Falls back to the
 plain `sliderMaxTokens` ceiling when no CPA model is selected, or while
 `dsh-client-ui-model-selection` isn't available in a profile.
 
-Selecting a tick writes `contextCapTokens` and locks the slider until that
+Selecting a tick writes `contextCapTokens` through `remote.settings.mutate` and locks the slider until that
 write confirms, so a rapid drag cannot queue overlapping mutates. The
 adapter's `resolveModel()` reads the stored cap on every call and returns
 `min(contextCapTokens, model's real max)` as the model's context window, so
